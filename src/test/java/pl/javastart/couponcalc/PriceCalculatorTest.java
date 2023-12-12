@@ -109,6 +109,28 @@ public class PriceCalculatorTest {
     }
 
     @Test
+    void shouldApplyMostAdvantageousDiscountWhenTwoOrMoreCouponsAreUsedAndNullCategoryOneGives100PercentDiscount() {
+        //given
+        List<Product> products = List.of(
+                new Product("Masło", 5.99, Category.FOOD),
+                new Product("Kebab", 30.45, Category.FOOD),
+                new Product("Pizza", 45.79, Category.FOOD),
+                new Product("Sony PlayStation 4", 1500.99, Category.ENTERTAINMENT),
+                new Product("Honda Civic", 100000, Category.CAR)
+        );
+        List<Coupon> coupons = List.of(
+                new Coupon(Category.FOOD, 50),
+                new Coupon(null, 100),
+                new Coupon(Category.CAR, 10));
+
+        //when
+        double result = priceCalculator.calculatePrice(products, coupons);
+
+        //then
+        assertThat(result).isEqualTo(0);
+    }
+
+    @Test
     public void shouldReturnPriceForSingleProductAndOneCoupon() {
 
         // given
