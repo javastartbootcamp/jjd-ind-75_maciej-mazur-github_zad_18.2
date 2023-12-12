@@ -1,5 +1,7 @@
 package pl.javastart.couponcalc;
 
+import java.util.Objects;
+
 public class Coupon {
 
     private final Category category;
@@ -16,5 +18,22 @@ public class Coupon {
 
     public int getDiscountValueInPercents() {
         return discountValueInPercents;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Coupon coupon = (Coupon) o;
+        return getDiscountValueInPercents() == coupon.getDiscountValueInPercents() && getCategory() == coupon.getCategory();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCategory(), getDiscountValueInPercents());
     }
 }
